@@ -149,8 +149,16 @@ $(document).ready(function(){
 		for (let i =0; i<dataArr.length; i++) {
 
 				var listItem = "<li>"  + dataArr[i] + "<input class='change-item-content'></input><button class='remove'>Delete</button><button class='change-item'>Change</button></li>";    
-				
-				$("#list").append(listItem);
+                
+                
+                $("#list").append(listItem);
+                
+                //delete the list
+			    $(".remove").click(function () {
+					
+					$(this).parent().remove();
+			
+			    });
 		
 		}
 

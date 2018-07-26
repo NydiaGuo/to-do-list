@@ -18,8 +18,9 @@ http.listen(PORT, function(){
 });
 
 
-
 let currentData = db.tasks;
+
+console.log(currentData);
 
 app.get('/get-data', function(req, res) {
 
@@ -37,10 +38,11 @@ app.post('/set-data', function(req, res) {
     console.log("this is req body: ", req.body.task);
 
     currentData.push(req.body.task);
+    
     fs.writeFileSync('data/data.json', JSON.stringify(db, null, 2), 'utf8', (err) => {
         console.log(err);
     });
 
-    res.send("server got the items");
+    res.send(db);
 
 });
