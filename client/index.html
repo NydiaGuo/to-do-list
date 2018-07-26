@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description">
+    <meta name="author" content="Ni Guo">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+<style>
+
+body {
+    background-image: url("1.jpg");
+
+}
+
+.container{
+    margin-top: 20px;
+    background-color: rgb(231,206,149);
+    padding: 15px;
+    border-radius: 3px;
+    width: 50%;
+
+}
+
+#list-header {
+    padding: 120px;
+    text-align: center;
+    background-image: url("cloud.jpg");
+    margin-bottom: 10px;
+    background-repeat:no-repeat;
+    background-size: cover;
+ 
+}
+
+#list-header h1 {
+    font-weight: bolder;
+    color: white;
+}
+
+#list-content {
+ 
+    padding-bottom: 80px;
+    border: 3px dotted white;
+    border-radius: 3px;
+
+}
+
+#list-content p {
+    margin-left: 20px;
+}
+
+form p{
+    margin-top: 20px;
+    margin-right: 390px;
+}
+
+form textarea {
+    width: 500px;
+    height: 60px;
+    margin: 5px 0px 5px 20px;
+    border-radius: 3px;
+}
+
+p {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+#submit-note {
+    margin-left: 420px;
+}
+
+button {
+    background-color:rgb(236, 163, 61);
+    border: none;
+    border-radius: 3px;
+    padding: 6px 15px 6px 15px;
+    color: white;
+}
+
+ul {
+    list-style: none;
+
+}
+
+ul li {
+    color: white;
+
+}
+
+ul textarea{
+    width: 220px;
+    height: 35px;
+    margin: 5px 5px 0px 10px;
+    border-radius: 3px;
+}
+
+.remove{
+    margin: 8px;
+}
+
+
+</style>
+
+
+
+</head>
+<body>
+
+<div class="container">
+
+    <div id="list-header">
+        <h1>To-Do List</h1>
+    </div>
+
+      
+    <div id="list-content">
+  
+        <form>
+            <p>New Note: </p>
+            <textarea id="new-note"></textarea>   
+        </form>
+       
+        <button id="submit-note">Add List</button>
+
+        <p>List Items:</p>
+        <ul id="list"></ul>
+    </div>
+
+    
+</div>
+
+
+
+<script>
+
+$(document).ready(function(){
+
+	$.get('http://localhost:8080/get-data', function(data) {
+		console.log(data);
+		
+		let dataArr = data.tasks;
+
+		for (let i =0; i<dataArr.length; i++) {
+
+				var listItem = "<li>"  + dataArr[i] + "<input class='change-item-content'></input><button class='remove'>Delete</button><button class='change-item'>Change</button></li>";    
+				
+				$("#list").append(listItem);
+		
+		}
+
+	});
+
+	$("#submit-note").click(function (e) {
+			//prevnet default by clicking on the button
+		e.preventDefault();
+
+		var noteText = $("#new-note").val().trim();
+
+		if( noteText !== ""){
+
+			var change = "<button class='change-item'>Change</button>";
+			var changeItem = "<input class='change-item-content'></input>";
+			var listItem = "<li>"  + noteText + changeItem + "<button class='remove'>Delete</button>" + change + "</li>";
+
+			let submission = {
+					"task": noteText 
+			}
+
+			$.post("http://localhost:8080/set-data", submission, function(data) {
+					console.log("this is a new item send it to the server");
+					console.log("this is data from post: ", data);
+			});
+
+									
+			$("#list").append(listItem);
+
+			//empty the textares after clicking
+			$("#new-note").val("");
+			
+			//delete the list
+			$(".remove").click(function () {
+					
+					$(this).parent().remove();
+			
+			});
+
+		}
+			
+	});
+
+
+});
+
+
+</script>
+</body>
+</html>
