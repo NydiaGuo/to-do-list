@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
+//convert the strings to a json file for javascript
 const db = JSON.parse(fs.readFileSync('data/data.json', 'utf8'));
 
 let app = express();
