@@ -58,20 +58,16 @@ form p{
     margin-right: 390px;
 }
 
-form #new-note {
+form textarea {
     width: 500px;
     height: 60px;
     margin: 5px 0px 5px 20px;
     border-radius: 3px;
 }
 
-form textarea {
-    margin: 0px 10px 0px 10px;
-}
-
 p {
     font-size: 20px;
-    color:black;
+    color: white;
     font-weight: bold;
 }
 
@@ -93,16 +89,15 @@ ul {
 }
 
 ul li {
-    color: rgb(10, 10, 10);
-    margin: 10px;
+    color: white;
 
 }
 
-ul input{
-    /* width: 220px;
-    height: 35px; */
+ul textarea{
+    width: 220px;
+    height: 35px;
     margin: 5px 5px 0px 10px;
-    /* border-radius: 3px; */
+    border-radius: 3px;
 }
 
 .remove{
@@ -127,20 +122,14 @@ ul input{
     <div id="list-content">
   
         <form>
-
-            <div class="form-group row">
-                    <p class="col-md-3">New Note: </p>
-                <div class="col-md-9">
-                    <textarea class="form-control" rows="2"></textarea>
-                </div>
-            </div>
-
+            <p>New Note: </p>
+            <textarea id="new-note"></textarea>   
         </form>
        
         <button id="submit-note">Add List</button>
 
         <p>List Items:</p>
-        <ul class="list-group" id="list"></ul>
+        <ul id="list"></ul>
     </div>
 
     
@@ -152,25 +141,24 @@ ul input{
 
 $(document).ready(function(){
 
-	$.get('http://localhost:8080/get-data', function(data) {
-		console.log(data);
+	$.get('http://localhost:8000/get-data', function(data) {
 		
 		let dataArr = data.tasks;
 
 		for (let i =0; i<dataArr.length; i++) {
 
-				var listItem = "<li>"  + dataArr[i] + "<input class='change-item-content'></input><button class='remove'>Delete</button><button class='change-item'>Change</button></li>";    
-                
-                $("#list").append(listItem);
-                
-                //delete the list
-			    $(".remove").click(function () {
-					
-					$(this).parent().remove();
-			
-			    });
+			var listItem = "<li>"  + dataArr[i] + "<input class='change-item-content'></input><button class='remove'>Delete</button><button class='change-item'>Change</button></li>";    
+				
+			$("#list").append(listItem);
 		
-		}
+        	}
+        
+        	//delete the list
+		$(".remove").click(function () {
+					
+                    $(this).parent().remove();
+                
+                });
 
 	});
 
@@ -187,12 +175,12 @@ $(document).ready(function(){
 			var listItem = "<li>"  + noteText + changeItem + "<button class='remove'>Delete</button>" + change + "</li>";
 
 			let submission = {
-				"task": noteText 
+					"task": noteText 
 			}
 
-			$.post("http://localhost:8080/set-data", submission, function(data) {
-					console.log("this is a new item send it to the server");
-					console.log("this is data from post: ", data);
+			$.post("http://localhost:8000/set-data", submission, function(data) {
+					
+				console.log("this is data from post: ", data);
 			});
 
 									
@@ -204,7 +192,7 @@ $(document).ready(function(){
 			//delete the list
 			$(".remove").click(function () {
 					
-					$(this).parent().remove();
+				$(this).parent().remove();
 			
 			});
 
@@ -212,9 +200,7 @@ $(document).ready(function(){
 			
 	});
 
-
 });
-
 
 </script>
 </body>
