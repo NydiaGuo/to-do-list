@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-
-//convert the strings to a json file for javascript
 const db = JSON.parse(fs.readFileSync('data/data.json', 'utf8'));
 
 let app = express();
@@ -12,7 +10,7 @@ app.use(express.static('client/'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-let PORT = process.env.PORT || 8080;
+let PORT = process.env.PORT || 8000;
 
 http.listen(PORT, function(){
     console.log('this server is listening on PORT: '+ PORT );
@@ -20,8 +18,6 @@ http.listen(PORT, function(){
 
 
 let currentData = db.tasks;
-
-console.log(currentData);
 
 app.get('/get-data', function(req, res) {
 
@@ -44,6 +40,6 @@ app.post('/set-data', function(req, res) {
         console.log(err);
     });
 
-    res.send(db);
+    res.send("server got the items");
 
 });
