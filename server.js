@@ -48,9 +48,30 @@ app.post('/set-data', function(req, res) {
 app.post('/remove-data', (req, res)=>{
     console.log(req.body.task);
 
+    let task = req.body.task;
 
-    // fs.writeFileSync('data/data.json', JSON.stringify(db, null, 2), 'utf8', (err) => {
-    //     console.log(err);
-    // });
-    res.send("server removed the item");
+    let index = currentData.indexOf(task);
+
+
+    if (index > -1) {
+
+        currentData.splice(index, 1);
+
+        let data ={
+            "tasks": currentData
+        }
+
+        console.log("this is remove data: ", currentData);
+
+        fs.writeFileSync('data/data.json', JSON.stringify(data, null, 2), 'utf8', (err) => {
+            console.log(err);
+            res.send("server removed the item");
+        });
+    
+
+    }
+
+
+
+ 
 });
