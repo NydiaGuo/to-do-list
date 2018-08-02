@@ -67,11 +67,8 @@ app.post('/remove-data', (req, res)=>{
             console.log(err);
             res.send("server removed the item");
         });
-    
 
     }
 
 
-
- 
 });

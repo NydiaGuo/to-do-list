@@ -13,13 +13,13 @@
 <style>
 
 body {
-    background-image: url("1.jpg");
+    background-image: url("https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif");
 
 }
 
 .container{
-    margin-top: 20px;
-    background-color: rgb(231,206,149);
+
+    background-color: rgba(47, 90, 177, 0.829);
     padding: 15px;
     border-radius: 3px;
     width: 50%;
@@ -27,81 +27,46 @@ body {
 }
 
 #list-header {
-    padding: 120px;
+    padding: 40px;
     text-align: center;
-    background-image: url("cloud.jpg");
-    margin-bottom: 10px;
-    background-repeat:no-repeat;
-    background-size: cover;
- 
-}
-
-#list-header h1 {
-    font-weight: bolder;
-    color: white;
-}
-
-#list-content {
- 
-    padding-bottom: 80px;
-    border: 3px dotted white;
-    border-radius: 3px;
-
-}
-
-#list-content p {
-    margin-left: 20px;
-}
-
-form p{
-    margin-top: 20px;
-    margin-right: 390px;
-}
-
-form textarea {
-    width: 500px;
-    height: 60px;
-    margin: 5px 0px 5px 20px;
-    border-radius: 3px;
-}
-
-p {
-    font-size: 20px;
-    color: white;
-    font-weight: bold;
+    color: whitesmoke;
 }
 
 #submit-note {
-    margin-left: 420px;
+    float: right;
 }
 
-button {
-    background-color:rgb(236, 163, 61);
-    border: none;
-    border-radius: 3px;
-    padding: 6px 15px 6px 15px;
-    color: white;
+h4 {
+    color: whitesmoke;
+}
+
+#title {
+    clear: both;
 }
 
 ul {
     list-style: none;
-
 }
 
 ul li {
+    margin: 10px;
+}
+
+ul button {
+    margin: 5px;
+}
+
+
+ul li p {
     color: white;
+    float: left;
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 20px;
+} 
 
-}
-
-ul textarea{
-    width: 220px;
-    height: 35px;
-    margin: 5px 5px 0px 10px;
-    border-radius: 3px;
-}
-
-.remove{
-    margin: 8px;
+ul li input {
+    margin-right: 10px;
 }
 
 
@@ -122,13 +87,14 @@ ul textarea{
     <div id="list-content">
   
         <form>
-            <p>New Note: </p>
-            <textarea id="new-note"></textarea>   
+            <div class="form-group">
+            <h4>New Note: </h4>
+            <textarea class="form-control" id="new-note"></textarea>
+            </div>
         </form>
-       
-        <button id="submit-note">Add List</button>
+        <button type="button" class="btn btn-light" id="submit-note">Add List</button>
 
-        <p>List Items:</p>
+        <h4 id="title">List Items:</h4>
         <ul id="list"></ul>
     </div>
 
@@ -147,7 +113,7 @@ $(document).ready(function(){
 
 		for (let i =0; i<dataArr.length; i++) {
 
-			var listItem = "<li><p>"  + dataArr[i] + "</p><input class='change-item-content'></input><button class='remove'>Delete</button><button class='change-item'>Change</button></li>";    
+			var listItem = "<li><p>"  + dataArr[i] + "</p><input type='text' class='change-item-content' ></input><button class='remove btn btn-light'>Delete</button><button class='change-item btn btn-light'>Change</button></li>";    
 				
 			$("#list").append(listItem);
 		
@@ -184,9 +150,9 @@ $(document).ready(function(){
 
 		if( noteText !== ""){
 
-			var change = "<button class='change-item'>Change</button>";
-			var changeItem = "<input class='change-item-content'></input>";
-			var listItem = "<li><p>"  + noteText + "</P>" + changeItem + "<button class='remove'>Delete</button>" + change + "</li>";
+			var change = "<button class='change-item btn btn-light'>Change</button>";
+			var changeItem = "<input type='text' class='change-item-content'></input>";
+			var listItem = "<li><p>"  + noteText + "</P>" + changeItem + "<button class='remove btn btn-light'>Delete</button>" + change + "</li>";
 
 			let submission = {
 					"task": noteText 
