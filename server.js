@@ -43,3 +43,14 @@ app.post('/set-data', function(req, res) {
     res.send("server got the items");
 
 });
+
+
+app.post('/remove-data', (req, res)=>{
+    console.log(req.body.task);
+
+
+    // fs.writeFileSync('data/data.json', JSON.stringify(db, null, 2), 'utf8', (err) => {
+    //     console.log(err);
+    // });
+    res.send("server removed the item");
+});

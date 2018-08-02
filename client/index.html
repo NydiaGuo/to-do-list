@@ -147,7 +147,7 @@ $(document).ready(function(){
 
 		for (let i =0; i<dataArr.length; i++) {
 
-			var listItem = "<li>"  + dataArr[i] + "<input class='change-item-content'></input><button class='remove'>Delete</button><button class='change-item'>Change</button></li>";    
+			var listItem = "<li><p>"  + dataArr[i] + "</p><input class='change-item-content'></input><button class='remove'>Delete</button><button class='change-item'>Change</button></li>";    
 				
 			$("#list").append(listItem);
 		
@@ -155,10 +155,24 @@ $(document).ready(function(){
         
         	//delete the list
 		$(".remove").click(function () {
+
+       
+            
+            let item = $(this).siblings("p").text();
+            console.log("this is this: ", item);
+            let lists = {
+                "task": item
+            }
+
+            console.log("this is the lists: ", lists);
+
+            $.post('http://localhost:8000/remove-data', lists, (data)=>{
+                console.log("this is remove data: ", data);
+            });
 					
-                    $(this).parent().remove();
+            $(this).parent().remove();
                 
-                });
+        });
 
 	});
 
@@ -172,7 +186,7 @@ $(document).ready(function(){
 
 			var change = "<button class='change-item'>Change</button>";
 			var changeItem = "<input class='change-item-content'></input>";
-			var listItem = "<li>"  + noteText + changeItem + "<button class='remove'>Delete</button>" + change + "</li>";
+			var listItem = "<li><p>"  + noteText + "</P>" + changeItem + "<button class='remove'>Delete</button>" + change + "</li>";
 
 			let submission = {
 					"task": noteText 
